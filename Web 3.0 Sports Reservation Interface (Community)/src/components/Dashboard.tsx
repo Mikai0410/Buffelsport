@@ -111,6 +111,13 @@ interface DashboardProps {
 export function Dashboard({ userData, onEditProfile, onLogout, bookings, onDeleteBooking }: DashboardProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [bookingToDelete, setBookingToDelete] = useState<number | null>(null);
+  const [ratingDialogOpen, setRatingDialogOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<number | null>(null);
+  const [ratingType, setRatingType] = useState<'rate' | 'report'>('rate');
+  const [rating, setRating] = useState(0);
+  const [reportReason, setReportReason] = useState('');
+  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
+  const [randomPlayers, setRandomPlayers] = useState<string[]>([]);
 
   const handleEditBooking = (id: number) => {
     alert(`Edit booking #${id} - Feature coming soon!`);
@@ -123,10 +130,56 @@ export function Dashboard({ userData, onEditProfile, onLogout, bookings, onDelet
 
   const handleDeleteConfirm = () => {
     if (bookingToDelete !== null) {
-      onDeleteBooking?.(bookingToDelete);
+      setBookings(bookings.filter(b => b.id !== bookingToDelete));
       setDeleteDialogOpen(false);
       setBookingToDelete(null);
     }
+  };
+
+  const handleRateClick = (id: number) => {
+    setSelectedBooking(id);
+    setRatingType('rate');
+    setRating(0);
+    setReportReason('');
+    setRatingDialogOpen(true);
+  };
+
+  const handleReportClick = (id: number) => {
+    setSelectedBooking(id);
+    setRatingType('report');
+    setRating(0);
+    setReportReason('');
+    setSelectedPlayer(null);
+    
+    // Select 3 random players
+    const shuffled = [...mockPlayerNames].sort(() => 0.5 - Math.random());
+    setRandomPlayers(shuffled.slice(0, 3));
+    
+    setRatingDialogOpen(true);
+  };
+
+  const handleRatingSubmit = () => {
+    if (ratingType === 'rate' && rating === 0) {
+      alert('Selecteer een rating');
+      return;
+    }
+    if (ratingType === 'report' && !selectedPlayer) {
+      alert('Selecteer een speler om te rapporteren');
+      return;
+    }
+    if (ratingType === 'report' && !reportReason.trim()) {
+      alert('Voer een reden in voor de rapportage');
+      return;
+    }
+    
+    // Process the rating or report
+    const message = ratingType === 'rate' 
+      ? `Match beoordeeld met ${rating} sterren`
+      : `Speler ${selectedPlayer} gerapporteerd: ${reportReason}`;
+    alert(message);
+    
+    setRatingDialogOpen(false);
+    setSelectedBooking(null);
   };
 
   const totalSpent = bookings.reduce((sum, booking) => sum + booking.price, 0);

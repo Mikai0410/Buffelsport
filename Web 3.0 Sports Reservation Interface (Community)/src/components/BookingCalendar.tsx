@@ -99,7 +99,7 @@ export function BookingCalendar({ fieldName, onConfirm }: BookingCalendarProps) 
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <Card className="p-6 md:p-8 flex flex-col">
+          <Card className="p-6 bg-sport-primary/5 border-sport-primary/20">
             <div className="flex items-center justify-center gap-3 mb-4">
               <CheckCircle className="w-6 h-6 text-sport-accent" />
               <div className="text-left">

@@ -7,6 +7,8 @@ import { LocationBookingDialog } from './LocationBookingDialog';
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+
 
 interface Location extends FacilityLocation {
   distance?: number;
@@ -382,8 +384,8 @@ const visibleLocations = filteredLocations.slice(0, visibleCount);
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, }}
+          animate={{ opacity: 1 }}
           className="mb-8"
         >
           <h1 className="text-4xl text-gray-900 mb-4">Vind sportlocaties bij jou in de buurt</h1>
@@ -394,8 +396,8 @@ const visibleLocations = filteredLocations.slice(0, visibleCount);
 
         {/* Search Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, }}
+          animate={{ opacity: 1, }}
           transition={{ delay: 0.1 }}
           className="bg-white rounded-2xl shadow-lg p-6 mb-8"
         >
@@ -476,8 +478,8 @@ const visibleLocations = filteredLocations.slice(0, visibleCount);
                   {visibleLocations.map((location, index) => (
                     <motion.div
                       key={location.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                       transition={{ delay: index * 0.05 }}
                       className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all cursor-pointer ${
                         selectedLocation?.id === location.id ? 'ring-2 ring-sport-primary' : ''
@@ -599,8 +601,8 @@ const visibleLocations = filteredLocations.slice(0, visibleCount);
           {/* Map */}
           <div className="lg:col-span-1">
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               className="sticky top-24"
             >
               <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
